@@ -108,8 +108,11 @@ Initial stumbling blocks to setup a working environment.
 -----------
   After fixing all above issues, localhost:3000 displays exactly the same page as the one in the video.
 
-                                      # ISSUES PART II
-                                      ================
+
+
+# ISSUES PART II
+================
+
 
 # rspec spec/models/restaurant_spec.rb (First time)
 
@@ -150,4 +153,44 @@ Initial stumbling blocks to setup a working environment.
 ---
 After doing all the above, running rspec spec/models/restaurant_spec.rb for fourth time gives same result as video.
 
+
+# ISSUES PART restaurantly#show
+===============================
+
+# localhost:3000/restaurants/2 ##(in video instead of 2, id was 4)
+  **PROBLEM**: ActionView::Template::Error (Invalid CSS after "...ules: $modules ": expected "}", was "!global;"
+
+  **DESCRIPTION**: localhost:3000 and localhost:3000/restaurants/2 render the above mentioned error whereas before localhost:3000 was running fine.
+
+  **SOLUTION**:
+
+                1. bundle show foundation-rails
+
+                2. open the path in sublime: subl /usr/local/lib/ruby/gems/2.2.0/gems/foundation-rails-5.5.0.0
+
+                3. change following section:
+
+                  $modules: () !default;
+                  @mixin exports($name) {
+                    // Import from global scope
+                    $modules: $modules !global;
+                    // Check if a module is already on the list
+                    $module_index: index($modules, $name);
+                    @if (($module_index == null) or ($module_index == false)) {
+                      $modules: append($modules, $name) !global;
+                      @content;
+
+                  TO FOLLOWING:
+
+                  $modules: () !default;
+                  @mixin exports($name) {
+                    @if(not index($modules, $name)) {
+                      $modules: append($modules, $name);
+                      @content;
+                    }
+                  }
+
+                4. save and relaunch server.
+
+  **SOURCE**: https://github.com/zurb/foundation/issues/5753 (Signum's solution)
 
