@@ -21,6 +21,7 @@ source 'https://rubygems.org'
     gem 'capybara', '~> 2.2.1'
     gem 'pry'
     gem 'pry-byebug'
+    gem 'test-unit'
   end
 
   group :doc do
