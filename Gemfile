@@ -22,6 +22,8 @@ source 'https://rubygems.org'
     gem 'pry'
     gem 'pry-byebug'
     gem 'test-unit'
+    gem 'selenium-webdriver'
+    gem 'database_cleaner', '~> 1.2.0'
   end
 
   group :doc do
